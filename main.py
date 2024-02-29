@@ -1,8 +1,9 @@
-# This is a sample Python script.
+#!/usr/bin/env python3
+# This Python script adds caption to image files using pillow
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 import os
+import sys
+import argparse
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
@@ -10,7 +11,6 @@ from PIL import ImageOps
 
 
 def add_caption(directory):
-
     # Open the desired Image you want to add text on
     for filename in os.listdir(directory):
         full_name = os.path.join(directory, filename)
@@ -46,8 +46,15 @@ def add_caption(directory):
             i.save(new_fullname)
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    add_caption('./ingaro')
+def run(args):
+    parser = argparse.ArgumentParser(description='Add caption to imagefiles in the specified directory')
+    parser.add_argument('-d', '--directory', metavar='S', required=True,
+                        help='The directory where the image files are located')
+    args = parser.parse_args()
+    path = os.path.join(args.directory, 'captioned')
+    os.mkdir(path)
+    add_caption(args.directory)
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+if __name__ == '__main__':
+    run(sys.argv)
