@@ -12,7 +12,8 @@ from PIL import ImageOps
 
 def add_caption(directory):
     # Open the desired Image you want to add text on
-    for filename in os.listdir(directory):
+    files = os.listdir(directory)
+    for filename in files:
         full_name = os.path.join(directory, filename)
         # Check if the current file is a regular file (not a directory)
         if os.path.isfile(full_name):
@@ -23,7 +24,7 @@ def add_caption(directory):
             except IOError:
                 continue
             number = int(full_name.split(' ')[1].split('.')[0])
-            years_ago = (81 - number) * 100
+            years_ago = (len(files) - number) * 100
             if years_ago > 1950:
                 caption = "År: " + str(years_ago - 1950) + " f.Kr"
             else:
